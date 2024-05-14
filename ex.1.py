@@ -4,7 +4,7 @@
 
 
 class Solution:
-    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+    def find_max_consecutive_ones(self, nums: list[int]) -> int:
         max_consecutive_ones = 0
         current_consecutive_ones = 0
 
