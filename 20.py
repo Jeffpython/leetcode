@@ -1,41 +1,65 @@
-# s = "()"
-# s = "()[]{}"
-# s = "(]"
-s = "{[]}"
+# https://leetcode.com/problems/valid-parentheses/
+# 20. Valid Parentheses
+
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is
+# valid.
+# An input string is valid if:
+# 1. Open brackets must be closed by the same type of brackets.
+# 2. Open brackets must be closed in the correct order.
+# 3. Every close bracket has a corresponding open bracket of the same type.
+
+# Example 1:
+# Input: s = "()"
+# Output: true
+
+# Example 2:
+# Input: s = "()[]{}"
+# Output: true
+
+# Example 3:
+# Input: s = "(]"
+# Output: false
 
 
-# def is_valid(self, s: str) -> bool:
-def is_valid(s: str) -> bool:
+class Solution:
+    def is_valid(self, s: str) -> bool:
 
-    parentheses = [
-        {"open": "(", "close": ")"},
-        {"open": "[", "close": "]"},
-        {"open": "{", "close": "}"}
-    ]
+        parentheses = [
+            {"open": "(", "close": ")"},
+            {"open": "[", "close": "]"},
+            {"open": "{", "close": "}"}
+        ]
 
-    i = 0
+        opening_paren = ""
+        closing_paren = ""
+        start_index = -1
+        end_index = -1
 
-    while i < len(s):
-        current_symbol = s[i]
+        while s:
+            for i in range(len(s)):
+                if start_index == -1:
+                    for paren in parentheses:
+                        if s[i] == paren["open"]:
+                            opening_paren = paren["open"]
+                            closing_paren = paren["close"]
+                            start_index = i
+                            break
 
-        if i < len(s) - 1:
-            next_symbol = s[i+1]
-        else:
-            return False
+                    if start_index != -1 and i < len(s) - 1:
+                        if s[i+1] == closing_paren:
+                            end_index = i + 1
+                            s = s[0:start_index] + s[end_index+1:]
 
-        for p in range(len(parentheses)):
-            if current_symbol == parentheses[p]["open"]:
-                if next_symbol == parentheses[p]["close"]:
-                    i += 2
-                else:
-                    return False
+                            opening_paren = ""
+                            closing_paren = ""
+                            start_index = -1
+                            end_index = -1
+                            break
+                        else:
+                            opening_paren = ''
+                            closing_paren = ''
+                            start_index = -1
+                    else:
+                        return False
 
-    return True
-
-    # parentheses = {
-    #     "open": ["(", "[", "{"],
-    #     "close": [")", "]", "}"]
-    # }
-
-
-print(is_valid(s))
+        return True

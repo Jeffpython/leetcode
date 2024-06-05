@@ -18,6 +18,7 @@
 # Output: false
 # Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
 
+
 class Solution:
     def is_palindrome(self, x: int) -> bool:
         str_x = str(x)
