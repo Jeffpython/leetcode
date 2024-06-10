@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -5,18 +8,35 @@ class ListNode:
 
 
 class Solution:
-    @staticmethod
-    def merge_two_lists(self, list1: list, list2: list) -> list:
+    def merge_two_lists(self, list1: ListNode | None, list2: ListNode | None) -> ListNode | None:
+        # print(list1)
+        result = []
 
+        while list1 is not None:
+            result.append(list1.val)
+            list1 = list1.next
 
+        while list2 is not None:
+            result.append(list2.val)
+            list2 = list2.next
 
-        list1.extend(list2)
-        return sorted(list1)
+        result.sort()
+        result.reverse()
+        # print('result', result)
 
+        list_node = ListNode('')
 
-list1 = [1, 2, 4]
-list2 = [1, 3, 4]
+        for i in result:
+            if list_node.val:
+                list_node.next = deepcopy(list_node)
+            else:
+                list_node.next = None
 
-solution = Solution()
-print(solution.merge_two_lists(solution, list1, list2))
+            # print('i', i)
+            list_node.val = i
+
+        print('list_node', list_node)
+
+        return list_node
+
 
